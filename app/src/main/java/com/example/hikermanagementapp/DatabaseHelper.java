@@ -213,6 +213,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
     }
 
-
+    // Delete all Observations
+    public void deleteAllObservations() {
+        database = this.getWritableDatabase();
+        database.delete(TABLE_OBSERVATIONS, null, null);
+        database.close();
+    }
 
 }

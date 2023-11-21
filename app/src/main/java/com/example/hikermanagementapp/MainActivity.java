@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private HikeAdapter hikeAdapter;
     private DatabaseHelper database;
     private ArrayList<Hike> listHikes;
-    private FloatingActionButton fabAddHike;
+    private FloatingActionButton fabAddHike, fabDeleteAllHikes;
     private ImageButton btnSearch, btnCancelSearch;
     private TextView searchContent;
 
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.lvHikes);
         fabAddHike = findViewById(R.id.fabAddHike);
+        fabDeleteAllHikes = findViewById(R.id.fabDeleteAllHikes);
         btnSearch = findViewById(R.id.btnSearch);
         btnCancelSearch = findViewById(R.id.btnCancelSearch);
         searchContent = findViewById(R.id.searchContent);
@@ -51,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Set up Floating Action Button click listener
+        fabDeleteAllHikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent to start AddHikeActivity
+                database.deleteAllHikes();
+                listHikes = database.readHikes();
+                hikeAdapter = new HikeAdapter(listHikes, database, MainActivity.this);
+                listView.setAdapter(hikeAdapter);
+            }
+        });
 
         // Set up btnSearch to perform query listener
         btnSearch.setOnClickListener(new View.OnClickListener() {

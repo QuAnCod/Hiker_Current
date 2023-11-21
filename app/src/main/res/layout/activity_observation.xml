@@ -34,13 +34,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cancel" />
+
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvObservations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchObservations"></ListView>
+        android:layout_below="@id/searchObservations">
+
+    </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDeleteAllObservations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_delete_all"
+        app:layout_constraintBottom_toTopOf="@+id/fabAddObservation"
+        tools:layout_editor_absoluteX="339dp"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddObservation"
@@ -59,6 +74,7 @@
         android:id="@+id/tvHikeId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

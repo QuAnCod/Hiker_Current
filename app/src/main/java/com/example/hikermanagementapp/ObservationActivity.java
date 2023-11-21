@@ -18,7 +18,7 @@ public class ObservationActivity extends AppCompatActivity {
     private ObservationAdapter observationAdapter;
     private ArrayList<Observation> listObservations;
     private DatabaseHelper database;
-    private FloatingActionButton fabObservation;
+    private FloatingActionButton fabObservation, fabDelteAllObservations;
     private TextView tvHikeId;
 
     @Override
@@ -29,6 +29,7 @@ public class ObservationActivity extends AppCompatActivity {
         // TODO: Initialize variables
         lvObservations = findViewById(R.id.lvObservations);
         fabObservation = findViewById(R.id.fabAddObservation);
+        fabDelteAllObservations = findViewById(R.id.fabDeleteAllObservations);
         tvHikeId = findViewById(R.id.tvHikeId);
 
         // Set the hike ID
@@ -49,6 +50,14 @@ public class ObservationActivity extends AppCompatActivity {
             Intent intent = new Intent(ObservationActivity.this, AddObservationActivity.class);
             intent.putExtra("hikeId", tvHikeId.getText().toString());
             startActivity(intent);
+        });
+
+        fabDelteAllObservations.setOnClickListener(v -> {
+            // Delete all observations
+            database.deleteAllObservations();
+            listObservations = database.readObservations(Integer.parseInt(tvHikeId.getText().toString()));
+            observationAdapter = new ObservationAdapter(listObservations, database, this);
+            lvObservations.setAdapter(observationAdapter);
         });
 
         // TODO: Set up ListView item click listener
