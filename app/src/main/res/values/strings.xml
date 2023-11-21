@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Hiker Management App</string>
+    <string-array name="parking">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="difficulty">
+        <item>Chill</item>
+        <item>Newbie</item>
+        <item>Amateur</item>
+        <item>Professional</item>
+        <item>Master</item>
+    </string-array>
+</resources>
