@@ -8,14 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class HikeAdapter extends BaseAdapter {
     private ArrayList<Hike> listHikes;
     private DatabaseHelper database;
     private Context context;
 
-    private TextView txtNameOfHike, txtLocation, txtDate, txtLength, txtParking, txtDifficulty, txtDescription, txtAccommodation;
+    private TextView txtId, txtNameOfHike, txtLocation, txtDate, txtLength, txtParking, txtDifficulty, txtDescription, txtAccommodation;
 
     @Override
     public int getCount() {
@@ -46,16 +45,17 @@ public class HikeAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_hike, parent, false);
         }
 
-
+        txtId = convertView.findViewById(R.id.txtObservationId);
         txtNameOfHike = convertView.findViewById(R.id.txtNameOfHike);
-        txtLocation = convertView.findViewById(R.id.txtLocation);
-        txtDate = convertView.findViewById(R.id.txtDate);
+        txtLocation = convertView.findViewById(R.id.txtObservationTime);
+        txtDate = convertView.findViewById(R.id.txtObservationCmt);
         txtLength = convertView.findViewById(R.id.txtLength);
         txtParking = convertView.findViewById(R.id.txtParking);
         txtDifficulty = convertView.findViewById(R.id.txtDifficulty);
         txtDescription = convertView.findViewById(R.id.txtDescription);
         txtAccommodation = convertView.findViewById(R.id.txtAccommodation);
 
+        txtId.setText(String.valueOf(hike.getId()));
         txtNameOfHike.setText(hike.getName());
         txtLocation.setText(hike.getLocation());
         txtDate.setText(hike.getDate());

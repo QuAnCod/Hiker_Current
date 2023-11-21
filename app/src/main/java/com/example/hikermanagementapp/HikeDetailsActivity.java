@@ -20,7 +20,8 @@ import java.util.Locale;
 
 public class HikeDetailsActivity extends AppCompatActivity {
     // TODO: Declare variables
-    private EditText edtHikeName, edtLocation, edtLength, edtDescription, edtAccommodation;
+    private TextView txtIdEdit;
+    private EditText  edtHikeName, edtLocation, edtLength, edtDescription, edtAccommodation;
     private CalendarView cldDate;
     private Spinner spnParking, spnDifficulty;
     private ImageButton btnObservations, btnDelete, btnEdit, btnCancelEdit;
@@ -35,6 +36,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hike_details);
 
         // TODO: Initialize variables
+        txtIdEdit = findViewById(R.id.txtIdEdit);
         edtHikeName = findViewById(R.id.edtHikeName);
         edtLocation = findViewById(R.id.edtLocation);
         edtLength = findViewById(R.id.edtLength);
@@ -67,6 +69,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
         String bundleAccommodation = bundle.getString("accommodation", "");
 
         // TODO: Set text for Edit
+        txtIdEdit.setText(String.valueOf(bundleId));
         edtHikeName.setText(bundleName);
         edtLocation.setText(bundleLocation);
         edtLength.setText(bundleLength);
@@ -107,6 +110,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
 
         btnEdit.setOnClickListener(v -> {
             database = new DatabaseHelper(HikeDetailsActivity.this);
+            int id = Integer.parseInt(txtIdEdit.getText().toString());
             String name = edtHikeName.getText().toString();
             String location = edtLocation.getText().toString();
             String date = getDateFromDatePicker(cldDate);
@@ -116,9 +120,9 @@ public class HikeDetailsActivity extends AppCompatActivity {
             String description = edtDescription.getText().toString();
             String accommodation = edtAccommodation.getText().toString();
 
-            Hike hike = new Hike(bundleId, name, location, date, parking, length, difficulty, description, accommodation);
+            Hike hike = new Hike(id, name, location, date, parking, length, difficulty, description, accommodation);
             database.updateHike(hike);
-            Toast.makeText(HikeDetailsActivity.this, "Successfully Updated hike id" + bundleId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(HikeDetailsActivity.this, "Successfully Updated hike id" + id, Toast.LENGTH_SHORT).show();
         });
 
         btnCancelEdit.setOnClickListener(v -> finish());

@@ -37,7 +37,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_OBSERVATION = "observation";
     private static final String KEY_OBSERVATIONDATE = "dateObserved";
     private static final String KEY_COMMENTS = "comments";
-    private static final String KEY_IMAGE = "image";
 
     private SQLiteDatabase database;
 
@@ -55,7 +54,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_HIKE_ID + " INTEGER," + KEY_OBSERVATION + " TEXT,"
             + KEY_OBSERVATIONDATE + " DATE,"
             + KEY_COMMENTS + " TEXT,"
-            + KEY_IMAGE + " TEXT,"
             + " FOREIGN KEY (" + KEY_HIKE_ID + ") REFERENCES " + TABLE_HIKES + "(" + KEY_ID + "));";
 
     public DatabaseHelper(Context context) {
@@ -103,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Hike hike = new Hike(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+            Hike hike = new Hike(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
                     cursor.getString(4), cursor.getString(5), cursor.getString(6),
                     cursor.getString(7), cursor.getString(8));
             hikes.add(hike);
@@ -165,5 +163,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.delete(TABLE_HIKES, null, null);
         database.close();
     }
+
+    // Observations
+    // Add a new Observation
+    public void addObservation(Observation observation) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_HIKE_ID, observation.getHikeId());
+        values.put(KEY_OBSERVATION, observation.getObservation());
+        values.put(KEY_OBSERVATIONDATE, observation.getTimeObserved());
+        values.put(KEY_COMMENTS, observation.getComments());
+        database.insertOrThrow(TABLE_OBSERVATIONS, null, values);
+    }
+
+    // Fetch all Observations by Hike ID
+    public ArrayList<Observation> readObservations(int hikeId){
+        ArrayList<Observation> observations = new ArrayList<>();
+        database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_OBSERVATIONS + " WHERE " + KEY_HIKE_ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(hikeId)};
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Observation observation = new Observation(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4));
+            observations.add(observation);
+            cursor.moveToNext();
+        }
+        database.close();
+        return observations;
+    }
+
+    // Update an Observation
+    public void updateObservation(Observation observation) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_OBSERVATION, observation.getObservation());
+        values.put(KEY_OBSERVATIONDATE, observation.getTimeObserved());
+        values.put(KEY_COMMENTS, observation.getComments());
+        database.update(TABLE_OBSERVATIONS, values, KEY_ID + " = ? && " + KEY_HIKE_ID + " = ?",
+                new String[]{String.valueOf(observation.getId()), String.valueOf(observation.getHikeId())});
+        database.close();
+    }
+
+    // Delete an Observation
+    public void deleteObservation(int id) {
+        database = this.getWritableDatabase();
+        database.delete(TABLE_OBSERVATIONS, KEY_ID + " = ?",
+                new String[]{String.valueOf(id)});
+        database.close();
+    }
+
+
 
 }

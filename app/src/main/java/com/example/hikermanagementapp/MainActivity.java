@@ -74,18 +74,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set up listView item click listener
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Hike hike = listHikes.get(position);
+        listView.setOnItemClickListener((parent, view, position, i) -> {
+            int id;
+            id = listHikes.get(position).getId();
             Intent intent = new Intent(MainActivity.this, HikeDetailsActivity.class);
-            intent.putExtra("id", listView.getItemIdAtPosition(position));
-            intent.putExtra("name", hike.getName());
-            intent.putExtra("location", hike.getLocation());
-            intent.putExtra("date", hike.getDate());
-            intent.putExtra("length", hike.getLength());
-            intent.putExtra("parking", hike.getParking());
-            intent.putExtra("difficulty", hike.getDifficulty());
-            intent.putExtra("description", hike.getDescription());
-            intent.putExtra("accommodation", hike.getAccommodation());
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", id);
+            bundle.putString("name", listHikes.get(position).getName());
+            bundle.putString("location", listHikes.get(position).getLocation());
+            bundle.putString("date", listHikes.get(position).getDate());
+            bundle.putString("length", listHikes.get(position).getLength());
+            bundle.putString("parking", listHikes.get(position).getParking());
+            bundle.putString("difficulty", listHikes.get(position).getDifficulty());
+            bundle.putString("description", listHikes.get(position).getDescription());
+            bundle.putString("accommodation", listHikes.get(position).getAccommodation());
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 
@@ -98,6 +101,5 @@ public class MainActivity extends AppCompatActivity {
         hikeAdapter = new HikeAdapter(listHikes, database, this);
         listView.setAdapter(hikeAdapter);
     }
-
 
 }

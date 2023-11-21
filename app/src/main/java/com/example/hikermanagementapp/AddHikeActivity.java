@@ -49,20 +49,10 @@ public class AddHikeActivity extends AppCompatActivity {
         clearInputFields();
 
         // TODO: Set up btnSave click listener
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveHike();
-            }
-        });
+        btnSave.setOnClickListener(v -> saveHike());
 
         // TODO: Set up btnCancel click listener
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnCancel.setOnClickListener(v -> finish());
 
     }
 

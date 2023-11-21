@@ -13,6 +13,12 @@
         android:theme="@style/Theme.HikerManagementApp"
         tools:targetApi="31">
         <activity
+            android:name=".EditObservationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddObservationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ObservationActivity"
             android:exported="false" />
         <activity
