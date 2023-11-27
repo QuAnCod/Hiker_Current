@@ -105,6 +105,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(v -> {
             database = new DatabaseHelper(HikeDetailsActivity.this);
             database.deleteHike(bundleId);
+            Toast.makeText(HikeDetailsActivity.this, "Successfully Deleted hike id" + bundleId, Toast.LENGTH_SHORT).show();
             finish();
         });
 
